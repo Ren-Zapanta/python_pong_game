@@ -1,9 +1,12 @@
 import pygame, sys, random, time
 
+pygame.init()
+pygame.mixer.init()
+
 player_score = 0
 opponent_score = 0
  
-
+bounce_sound = pygame.mixer.Sound("bounce.wav")
 #-------Animation Function------------------------------------------------
 
 def ball_animation():
@@ -14,6 +17,7 @@ def ball_animation():
     #bounds the ball's movement to the window
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
+
     if ball.left <= 0 or ball.right >= screen_width:
         ball_speed_x *= -1
 
@@ -22,11 +26,13 @@ def ball_animation():
         if ball_speed_x < 0:
             ball.left = opponent.right
             ball_speed_x *= -1
+            bounce_sound.play()
 
     if ball.colliderect(player):
         if ball_speed_x > 0:
             ball.right = player.left
             ball_speed_x *= -1
+            bounce_sound.play()
 
 def player_animation():
 
@@ -49,8 +55,8 @@ def opponent_animation():
 def ball_reset():
     global ball_speed_x, ball_speed_y
     ball.center = (screen_width / 2, screen_height / 2)
-    ball_speed_x = 8 * random.choice((1, -1))
-    ball_speed_y = 8 * random.choice((1, -1))
+    ball_speed_x = 15 * random.choice((1, -1))
+    ball_speed_y = 15 * random.choice((1, -1))
 
 #-------Animation Function--------------------------------------------------
 
@@ -66,9 +72,6 @@ def render_scores():
     screen.blit(player_text, player_text_rect)
     screen.blit(opponent_text, opponent_text_rect)
 
-
-
-pygame.init()
 clock = pygame.time.Clock()
 
 screen_width = 1200
@@ -86,8 +89,8 @@ light_grey = (200, 200, 200)
 bg_color = pygame.Color(75, 73, 32)
 
 #ball speed variables
-ball_speed_x = 8 
-ball_speed_y = 8
+ball_speed_x = 15 
+ball_speed_y = 15
 player_speed = 0
 opponent_speed = 15
 
@@ -98,14 +101,14 @@ while True:
             sys.exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                player_speed -= 10
+                player_speed -= 20
             if event.key == pygame.K_s:
-                player_speed += 10
+                player_speed += 20
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_w:
-                player_speed += 10
+                player_speed += 20
             if event.key == pygame.K_s:
-                player_speed -= 10
+                player_speed -= 20
 
 
     #Game Logic
@@ -134,4 +137,4 @@ while True:
 
     #updataes the game window
     pygame.display.flip()
-    clock.tick(90)
+    clock.tick(60)
