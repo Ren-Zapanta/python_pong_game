@@ -18,12 +18,19 @@ opponent = pygame.Rect(10 , screen_height / 2 - 70, 10, 140)
 light_grey = (200, 200, 200)
 bg_color = pygame.Color('grey12')
 
+#ball speed variables
+ball_speed_x = 7 
+ball_speed_y = 7
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
+    ball.x += ball_speed_x
+    ball.y += ball_speed_y
+    
     #Visuals
     screen.fill(bg_color)
     pygame.draw.rect(screen,light_grey, player)
