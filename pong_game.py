@@ -1,6 +1,6 @@
 import pygame, sys 
  
-#-------Animation Function-------
+#-------Animation Function------------------------------------------------
 
 def ball_animation():
     global ball_speed_x, ball_speed_y
@@ -34,8 +34,17 @@ def player_animation():
         player.top = 0
     if player.bottom > screen_height:
         player.bottom = screen_height
-        
-#-------Animation Function-------
+
+def opponent_animation():
+    global opponent_speed
+    if opponent.top < ball.y:
+        opponent.top += opponent_speed
+    if opponent.bottom > ball.y:
+        opponent.bottom -= opponent_speed
+
+
+
+#-------Animation Function--------------------------------------------------
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -58,7 +67,7 @@ bg_color = pygame.Color(75, 73, 32)
 ball_speed_x = 8 
 ball_speed_y = 8
 player_speed = 0
-opponent_speed = 6
+opponent_speed = 15
 
 while True:
     for event in pygame.event.get():
@@ -80,6 +89,7 @@ while True:
     #Game Logic
     ball_animation()
     player_animation()
+    opponent_animation()
 
     #Visuals
     screen.fill(bg_color)
@@ -91,4 +101,4 @@ while True:
 
     #updataes the game window
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(90)
