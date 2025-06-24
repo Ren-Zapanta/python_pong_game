@@ -19,14 +19,16 @@ def ball_animation():
             ball.left = opponent.right
             ball_speed_x *= -1
 
-# Collision with right paddle (player)
     if ball.colliderect(player):
         if ball_speed_x > 0:
             ball.right = player.left
             ball_speed_x *= -1
-        
-        
 
+def player_animation():
+
+    # Move player paddle
+    player.y += player_speed
+        
 #-------Animation Function-------
 
 pygame.init()
@@ -47,17 +49,31 @@ light_grey = (200, 200, 200)
 bg_color = pygame.Color(75, 73, 32)
 
 #ball speed variables
-ball_speed_x = 10 
-ball_speed_y = 10
+ball_speed_x = 8 
+ball_speed_y = 8
+player_speed = 0
+opponent_speed = 6
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_w:
+                player_speed -= 10
+            if event.key == pygame.K_s:
+                player_speed += 10
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_w:
+                player_speed += 10
+            if event.key == pygame.K_s:
+                player_speed -= 10
+
 
     #Game Logic
     ball_animation()
+    player_animation()
 
     #Visuals
     screen.fill(bg_color)
