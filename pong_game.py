@@ -61,7 +61,7 @@ def ball_reset():
 def render_scores():
     #scores
     font = pygame.font.Font(None, 500)
-    player_text = font.render(f"{player_score}", True, "black")
+    player_text = font.render(f"{player_score}", True, "gray")
     opponent_text = font.render(f"{opponent_score}", True, "gray")
 
     player_text_rect = player_text.get_rect(center=(screen_width * 3 // 4, screen_height // 2))
@@ -107,8 +107,7 @@ while True:
                 player_speed += 20
             if event.key == pygame.K_s:
                 player_speed -= 20
-
-
+                
     #Game Logic
     ball_animation()
     player_animation()
@@ -128,10 +127,8 @@ while True:
 
     render_scores()
 
-    pygame.draw.ellipse(screen, light_grey, ball)
+    pygame.draw.ellipse(screen, "orange", ball)
     pygame.draw.aaline(screen, light_grey, (screen_width/2, 0 ), (screen_width/2, screen_height))
-
-    
 
     #updataes the game window
     pygame.display.flip()
