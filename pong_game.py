@@ -26,8 +26,14 @@ def ball_animation():
 
 def player_animation():
 
-    # Move player paddle
+    #Move player paddle
     player.y += player_speed
+
+    #Keep player paddle on screen
+    if player.top < 0:
+        player.top = 0
+    if player.bottom > screen_height:
+        player.bottom = screen_height
         
 #-------Animation Function-------
 
