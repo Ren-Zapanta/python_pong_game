@@ -1,4 +1,4 @@
-import pygame, sys 
+import pygame, sys, random
  
 #-------Animation Function------------------------------------------------
 
@@ -41,6 +41,12 @@ def opponent_animation():
         opponent.top += opponent_speed
     if opponent.bottom > ball.y:
         opponent.bottom -= opponent_speed
+
+def ball_reset():
+    global ball_speed_x, ball_speed_y
+    ball.center = (screen_width / 2, screen_height / 2)
+    ball_speed_x = 8 * random.choice((1, -1))
+    ball_speed_y = 8 * random.choice((1, -1))
 
 
 
@@ -90,6 +96,8 @@ while True:
     ball_animation()
     player_animation()
     opponent_animation()
+    if ball.left <= 0 or ball.right >= screen_width:
+        ball_reset()
 
     #Visuals
     screen.fill(bg_color)
