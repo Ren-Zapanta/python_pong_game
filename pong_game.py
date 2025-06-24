@@ -1,5 +1,9 @@
-import pygame, sys, random
+import pygame, sys, random, time
+
+player_score = 0
+opponent_score = 0
  
+
 #-------Animation Function------------------------------------------------
 
 def ball_animation():
@@ -48,9 +52,21 @@ def ball_reset():
     ball_speed_x = 8 * random.choice((1, -1))
     ball_speed_y = 8 * random.choice((1, -1))
 
-
-
 #-------Animation Function--------------------------------------------------
+
+def render_scores():
+    #scores
+    font = pygame.font.Font(None, 500)
+    player_text = font.render(f"{player_score}", True, "black")
+    opponent_text = font.render(f"{opponent_score}", True, "gray")
+
+    player_text_rect = player_text.get_rect(center=(screen_width * 3 // 4, screen_height // 2))
+    opponent_text_rect = opponent_text.get_rect(center=(screen_width // 4, screen_height // 2))
+
+    screen.blit(player_text, player_text_rect)
+    screen.blit(opponent_text, opponent_text_rect)
+
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -96,16 +112,25 @@ while True:
     ball_animation()
     player_animation()
     opponent_animation()
-    if ball.left <= 0 or ball.right >= screen_width:
+
+    if ball.left <= 0:
+        player_score += 1
+        ball_reset()
+    if ball.right >= screen_width:
+        opponent_score += 1
         ball_reset()
 
     #Visuals
     screen.fill(bg_color)
-    pygame.draw.rect(screen,light_grey, player)
-    pygame.draw.rect(screen,light_grey, opponent)
+    pygame.draw.rect(screen, light_grey, player)
+    pygame.draw.rect(screen, light_grey, opponent)
+
+    render_scores()
+
     pygame.draw.ellipse(screen, light_grey, ball)
     pygame.draw.aaline(screen, light_grey, (screen_width/2, 0 ), (screen_width/2, screen_height))
 
+    
 
     #updataes the game window
     pygame.display.flip()
